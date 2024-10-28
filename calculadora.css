@@ -1,0 +1,122 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: Arial;
+    vertical-align: baseline;
+}
+
+body{
+    background-color: RGB(56, 76, 174);
+}
+
+div.calculatorContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-color: RGB(77, 77, 77);
+    margin: 200px 720px 100px 720px;
+    height: 820px;
+    border-radius: 10px 10px 50px 50px;
+    border-top: 8px outset white;
+    border-right: 8px inset white;
+    border-bottom: 25px inset white;
+    border-left: 8px outset white;
+}
+
+div.calculatorScreenContainer{     
+    width: 330px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: RGB(77, 77, 77);
+    font-size: 30px;   
+    border-left: 8px outset black;                 
+    border-bottom: 18px outset grey;          
+    border-top: 8px inset black;       
+    border-right: 8px outset black;
+    border-radius: 8px;
+    margin-top: 120px;
+}
+
+div.calculatorScreen {
+    background-color: RGB(201, 223, 210);
+    width: 90%;
+    height: 80%;
+    border-radius: 8px;
+}
+
+div.calculatorButtons {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(5, auto);
+    grid-template-rows: repeat(4, 40px);
+    width: 320px;
+    margin-bottom: 20px;
+}
+
+button.calculatorButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    width: 55px;
+    height: 30px;
+}
+
+button.deleteButton {
+    background-color: RGB(254, 207, 92);
+    color: black;
+    font-weight: bold;
+}
+
+button.letterButton{
+    font-weight: bold;
+}
+
+button.operatorButton {
+    background-color: RGB(56, 76, 174);
+    font-size: 24px;
+}
+
+div.dot{
+    background-color: white;
+    border-radius: 100%;
+    width: 8px;
+    height: 8px;
+}
+
+button.superIndexButton{
+    display: inline-block;
+}
+
+span.superIndex{
+    font-size: 14px;
+    vertical-align: super;
+}
+
+button.sevenButton{
+    border-radius: 10px 5px 5px 5px;
+}
+
+button.acButton{
+    border-radius: 5px 10px 5px 5px;
+}
+
+button.zeroButton{
+    border-radius: 5px 5px 5px 10px;
+}
+
+button.equalButton {
+    font-size: 20px;
+    border-radius: 5px 5px 10px 5px;
+}
+
