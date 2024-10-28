@@ -21,7 +21,7 @@ div.calculatorContainer {
     margin: 200px 720px 100px 720px;
     height: 820px;
     border-radius: 10px 10px 50px 50px;
-    border-top: 8px outset white;
+    border-top: 4px outset white;
     border-right: 8px inset white;
     border-bottom: 25px inset white;
     border-left: 8px outset white;
@@ -68,6 +68,8 @@ button.calculatorButton {
     background-color: black;
     color: white;
     border-radius: 5px;
+    border-top: 5px solid rgb(48, 48, 48);
+    border-right: 5px solid gray;
     width: 55px;
     height: 30px;
 }
@@ -104,19 +106,19 @@ span.superIndex{
 }
 
 button.sevenButton{
-    border-radius: 10px 5px 5px 5px;
+    border-radius: 15px 5px 5px 5px;
 }
 
 button.acButton{
-    border-radius: 5px 10px 5px 5px;
+    border-radius: 5px 15px 5px 5px;
 }
 
 button.zeroButton{
-    border-radius: 5px 5px 5px 10px;
+    border-radius: 5px 5px 5px 15px;
 }
 
 button.equalButton {
     font-size: 20px;
-    border-radius: 5px 5px 10px 5px;
+    border-radius: 5px 5px 15px 5px;
 }
 
