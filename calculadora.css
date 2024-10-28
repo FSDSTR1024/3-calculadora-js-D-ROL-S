@@ -1,15 +1,84 @@
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo/static/Exo-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
 /* Reset CSS */
 * {
     margin: 0;
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: Arial;
+    font-family: 'Exo';
     vertical-align: baseline;
 }
 
 body{
     background-color: RGB(56, 76, 174);
+}
+
+div.coverContainer{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+div.cover{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(207, 207, 207);
+    width: 450px;
+    height: 840px;
+    margin-top: 115px;
+    border-radius: 10px 10px 40px 40px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+div.logo{
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 150px;
+    margin-top: 150px;
+}
+
+h1{
+    font-size: 48px;
+    color: rgb(112, 112, 112);
+}
+
+div.topMarks{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+div.bottomMarks{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+div.marks{
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0) 90%);
+    background-color: rgb(112, 112, 112);
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
+
+div.bottomMarks > div.marks{
+    width: 20px;
+    height: 20px;
 }
 
 div.calculatorContainer {
@@ -18,13 +87,13 @@ div.calculatorContainer {
     align-items: center;
     flex-direction: column;
     background-color: RGB(77, 77, 77);
-    margin: 200px 720px 100px 720px;
+    margin: 100px 720px 100px 720px;
     height: 820px;
     border-radius: 10px 10px 50px 50px;
-    border-top: 4px outset white;
-    border-right: 8px inset white;
-    border-bottom: 25px inset white;
-    border-left: 8px outset white;
+    border-top: 8px outset rgb(207, 207, 207);
+    border-right: 8px inset rgb(207, 207, 207);
+    border-bottom: 25px inset rgb(207, 207, 207);
+    border-left: 8px outset rgb(207, 207, 207);
 }
 
 div.calculatorScreenContainer{     
