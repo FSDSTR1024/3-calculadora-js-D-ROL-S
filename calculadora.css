@@ -18,13 +18,28 @@ body{
     background-color: RGB(56, 76, 174);
 }
 
+div#main{
+    animation-duration: 2s;
+}
+
+@keyframes rotateCalculator{
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+/* ======== Tapadera de la calculadora ======== */
+
 div.coverContainer{
     position: relative;
     display: flex;
     justify-content: center;
 }
 
-div.cover{
+div#cover{
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -33,16 +48,48 @@ div.cover{
     width: 450px;
     height: 840px;
     margin-top: 115px;
-    border-radius: 10px 10px 40px 40px;
+    border-radius: 20px 20px 40px 40px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
 }
 
-div.logo{
+@keyframes removeCover{
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(0, 600px); 
+    }
+    75% {
+        transform: translate(-500px, 600px); 
+    }
+    100% {
+        transform: translate(-500px, 0);
+    }
+}
+
+@keyframes putCover{
+    0% {
+        transform: translate(-500px, 0);
+    }
+    50% {
+        transform: translate(-500px, 600px); 
+    }
+    75% {
+        transform: translate(0px, 600px); 
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+div#logo{
     position: absolute;
     left: 0;
     top: 0;
-    margin-left: 150px;
     margin-top: 150px;
+    margin-left: 150px;
 }
 
 h1{
@@ -81,7 +128,9 @@ div.bottomMarks > div.marks{
     height: 20px;
 }
 
-div.calculatorContainer {
+/* ======== Calculadora ======== */
+
+div#calculatorContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -95,6 +144,8 @@ div.calculatorContainer {
     border-bottom: 25px inset rgb(207, 207, 207);
     border-left: 8px outset rgb(207, 207, 207);
 }
+
+/* ======== Pantalla ======== */
 
 div.calculatorScreenContainer{     
     width: 330px;
@@ -117,23 +168,142 @@ div.calculatorScreen {
     width: 90%;
     height: 80%;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-div.calculatorButtons {
+div.calculatorScreen > input {
+    background-color: RGB(201, 223, 210);
+    overflow: hidden;
+    padding-left: 5px;
+    padding-top: 5px;
+    pointer-events: none;
+}
+
+div.calculatorScreen > input:focus {
+    outline: none;
+    border: none; 
+}
+
+/* Quitar las flechas de incremento y decremento */
+div.calculatorScreen > input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+/* ======== Botones ======== */
+
+div.calculatorButtonsContainer{
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+}
+
+div.onButtonContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 15px;
+}
+
+div.arrowsContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 35px);
+    grid-template-rows: repeat(3, 35px);
+    justify-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+div.leftArrow{
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
+    background-color: RGB(142, 142, 142);
+    clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+    grid-row: 2;
+    grid-column: 1;
+}
+
+div.rightArrow{
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
+    background-color: RGB(142, 142, 142);
+    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+    grid-row: 2;
+    grid-column: 3;
+}
+
+div.upArrow{
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
+    background-color: RGB(142, 142, 142);
+    clip-path: polygon(100% 25%, 100% 100%, 50% 75%, 0% 100%, 0% 25%, 50% 0%);
+    grid-row: 1;
+    grid-column: 2;
+}
+
+div.downArrow{
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
+    background-color: RGB(142, 142, 142);
+    clip-path: polygon(100% 0%, 100% 75%, 50% 100%, 0% 75%, 0% 0%, 50% 25%);
+    grid-row: 3;
+    grid-column: 2;
+}
+
+div.calculatorTopButtons{
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(6, auto);
+    grid-template-rows: repeat(2, 40px);
+    margin-bottom: 30px;
+}
+
+div.calculatorBottomButtons {
     display: grid;
     align-items: center;
     justify-items: center;
     grid-template-columns: repeat(5, auto);
     grid-template-rows: repeat(4, 40px);
-    width: 320px;
-    margin-bottom: 20px;
+    margin-bottom: 75px;
 }
 
-button.calculatorButton {
+button#on{
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
+    background-color: RGB(142, 142, 142);
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    font-size: 10px;
+}
+
+button.calculatorButton{
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
+}
+
+button.calculatorButton:hover{
+    cursor: pointer;
+}
+
+button.calculatorTopButton {
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    border-top: 5px solid rgb(48, 48, 48);
+    border-right: 5px solid gray;
+    width: 50px;
+    height: 25px;
+}
+
+button.calculatorBottomButton {
     background-color: black;
     color: white;
     border-radius: 5px;
@@ -169,25 +339,67 @@ button.superIndexButton{
     display: inline-block;
 }
 
-span.superIndex{
-    font-size: 14px;
-    vertical-align: super;
+button.fractionButton{
+    flex-direction: column;
 }
 
-button.sevenButton{
+span.superIndex{
+    vertical-align: super;
+    margin-bottom: 8px;
+}
+
+span.subIndex{
+    vertical-align: sub;
+    margin-top: 8px;
+}
+
+span.fillSquare{
+    width: 5px;
+    height: 5px;
+    background-color: black;
+    margin-left: 2px;
+}
+
+span.nonFillRectangle{
+    width: 5px;
+    height: 10px;
+    background-color: white;
+    border: 1px solid black;
+    margin-left: 2px;
+}
+
+span.fractionBar{
+    border: 1px solid black;
+    width: 15px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+span.superIndexLetter{
+    font-size: 14px;
+}
+
+span.superIndexNumber{
+    font-size: 10px;
+}
+
+button.topLeft{
     border-radius: 15px 5px 5px 5px;
 }
 
-button.acButton{
+button.topRight{
     border-radius: 5px 15px 5px 5px;
 }
 
-button.zeroButton{
+button.bottomLeft{
     border-radius: 5px 5px 5px 15px;
+}
+
+button.bottomRight {
+    border-radius: 5px 5px 15px 5px;
 }
 
 button.equalButton {
     font-size: 20px;
-    border-radius: 5px 5px 15px 5px;
 }
 
