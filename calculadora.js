@@ -1,42 +1,42 @@
 
-// let withCover = true;
-// let firstTime = true;
-// let mainEnded = false;
-// let coverEnded = true;
+let withCover = true;
+let firstTime = true;
+let mainEnded = false;
+let coverEnded = true;
 
-// document.getElementById('main').addEventListener('click', () =>{
-//     const main = document.getElementById('main');
-//     main.style.animationName = 'rotateCalculator';
+document.getElementById('main').addEventListener('click', () =>{
+    const main = document.getElementById('main');
+    main.style.animationName = 'rotateCalculator';
 
-//     main.addEventListener('animationend', () => {
-//         mainEnded = true;
-//     })
-// });
+    main.addEventListener('animationend', () => {
+        mainEnded = true;
+    })
+});
 
-// document.getElementById('cover').addEventListener('click', () =>{
+document.getElementById('cover').addEventListener('click', () =>{
 
-//     if(!mainEnded || !coverEnded) return;
+    if(!mainEnded || !coverEnded) return;
 
-//     coverEnded = false;
+    coverEnded = false;
 
-//     if(withCover){
-//         cover.style.animationName = 'removeCover';
-//     }
-//     else{
-//         cover.style.animationName = 'putCover';
-//     }
+    if(withCover){
+        cover.style.animationName = 'removeCover';
+    }
+    else{
+        cover.style.animationName = 'putCover';
+    }
 
-//     withCover = !withCover;
+    withCover = !withCover;
 
-//     cover.addEventListener('animationend', ()=>{
-//         if(firstTime){
-//             firstTime = false;
-//         }
+    cover.addEventListener('animationend', ()=>{
+        if(firstTime){
+            firstTime = false;
+        }
 
-//         coverEnded = true;
-//     });
+        coverEnded = true;
+    });
 
-// })
+})
 
 document.getElementById('on').addEventListener('click', (e) =>{
 
