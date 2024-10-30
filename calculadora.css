@@ -52,6 +52,7 @@ div#cover{
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     animation-duration: 3s;
     animation-fill-mode: forwards;
+    z-index: 1;
 }
 
 @keyframes removeCover{
@@ -207,7 +208,7 @@ div.onButtonContainer{
     margin-right: 15px;
 }
 
-div.arrowsContainer{
+div#arrowsContainer{
     display: grid;
     grid-template-columns: repeat(3, 35px);
     grid-template-rows: repeat(3, 35px);
@@ -216,7 +217,7 @@ div.arrowsContainer{
     margin-bottom: 30px;
 }
 
-div.leftArrow{
+div#leftArrow{
     width: 30px;
     height: 30px;
     background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
@@ -226,7 +227,7 @@ div.leftArrow{
     grid-column: 1;
 }
 
-div.rightArrow{
+div#rightArrow{
     width: 30px;
     height: 30px;
     background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
@@ -236,7 +237,7 @@ div.rightArrow{
     grid-column: 3;
 }
 
-div.upArrow{
+div#upArrow{
     width: 30px;
     height: 30px;
     background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
@@ -246,7 +247,7 @@ div.upArrow{
     grid-column: 2;
 }
 
-div.downArrow{
+div#downArrow{
     width: 30px;
     height: 30px;
     background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0) 50%);
