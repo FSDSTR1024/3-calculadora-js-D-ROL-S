@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="calculadora.css">
-    <script src="calculadora.js" defer></script>
-</head>
-<body>
-    
-    <div id="main">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Calculadora</title>
+		<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="calculadora.css" />
+		<script src="calculadora.js" defer></script>
+		<!-- Inclusion de Spline (Fondo de la web) -->
+		<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.36/build/spline-viewer.js" defer></script>
+		<!-- Biblioteca de MathQuill -->
+		<link rel="stylesheet" href="mathquill.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="mathquill.js"></script>
+		<!-- Biblioteca de Evaluatex -->
+		<script src="node_modules/evaluatex/dist/evaluatex.min.js" defer></script>
+	</head>
 
-        <!-- <div class="coverContainer">
+	<body>
+		<spline-viewer url="https://prod.spline.design/lR6Dc1Yj6K6F8e24/scene.splinecode"></spline-viewer>
+
+		<div id="main">
+			<!-- <div class="coverContainer">
 
             <div id="cover">
     
@@ -38,106 +47,77 @@
     
             </div>
         </div> -->
-    
-        <div id="calculatorContainer">
-    
-            <div class="calculatorScreenContainer">
-    
-                <div class="calculatorScreen">
-                    <input id="input" type="text"></input>
-                </div>
-    
-            </div>
-    
-            <div class="calculatorButtonsContainer">
 
-                <div class="onButtonContainer">
-                    <button id="on">ON</button>
-                </div>
+			<div id="calculatorContainer">
+				<div class="calculatorScreenContainer">
+					<div class="calculatorScreen" id="calculatorScreen"></div>
+					<div class="calculatorScreenResult" id="calculatorScreenResult"></div>
+				</div>
 
-                <div id="arrowsContainer">
+				<div class="calculatorButtonsContainer">
+					<div class="onButtonContainer">
+						<button id="on">ON</button>
+					</div>
 
-                    <div id="leftArrow">
+					<div id="arrowsContainer">
+						<div id="leftArrow"></div>
 
-                    </div>
+						<div id="rightArrow"></div>
 
-                    <div id="rightArrow">
+						<div id="upArrow"></div>
 
-                    </div>
+						<div id="downArrow"></div>
+					</div>
 
-                    <div id="upArrow">
+					<div class="calculatorTopButtons">
+						<button class="calculatorButton calculatorTopButton fractionButton topLeft" id="fraction">
+							<span class="fillSquare"></span>
+							<span class="fractionBar"></span>
+							<span class="fillSquare"></span>
+						</button>
+						<button class="calculatorButton calculatorTopButton" id="sqrt">√<span class="fillSquare"></span></button>
+						<button class="calculatorButton calculatorTopButton" id="inverse">𝒙<span class="superIndex superIndexNumber">-1</span></button>
+						<button class="calculatorButton calculatorTopButton" id="sin">sen</button>
+						<button class="calculatorButton calculatorTopButton" id="cos">cos</button>
+						<button class="calculatorButton calculatorTopButton topRight" id="tan">tan</button>
 
-                    </div>
+						<button class="calculatorButton calculatorTopButton superIndexButton bottomLeft" id="squared">𝒙<span class="superIndex superIndexNumber">2</span></button>
+						<button class="calculatorButton calculatorTopButton" id="raised">𝒙<span class="superIndex fillSquare"></span></button>
+						<button class="calculatorButton calculatorTopButton">(</button>
+						<button class="calculatorButton calculatorTopButton">)</button>
+						<button class="calculatorButton calculatorTopButton" id="log">log<span class="subIndex fillSquare"></span><span class="nonFillRectangle"></span></button>
+						<button class="calculatorButton calculatorTopButton bottomRight" id="ln">ln</button>
+					</div>
 
-                    <div id="downArrow">
+					<div class="calculatorBottomButtons">
+						<button class="calculatorButton calculatorBottomButton topLeft">7</button>
+						<button class="calculatorButton calculatorBottomButton">8</button>
+						<button class="calculatorButton calculatorBottomButton">9</button>
+						<button class="calculatorButton calculatorBottomButton deleteButton" id="delete">DEL</button>
+						<button class="calculatorButton calculatorBottomButton deleteButton topRight" id="clear">AC</button>
 
-                    </div>
+						<button class="calculatorButton calculatorBottomButton">4</button>
+						<button class="calculatorButton calculatorBottomButton">5</button>
+						<button class="calculatorButton calculatorBottomButton">6</button>
+						<button class="calculatorButton calculatorBottomButton operatorButton">×</button>
+						<button class="calculatorButton calculatorBottomButton operatorButton">÷</button>
 
-                </div>
+						<button class="calculatorButton calculatorBottomButton">1</button>
+						<button class="calculatorButton calculatorBottomButton">2</button>
+						<button class="calculatorButton calculatorBottomButton">3</button>
+						<button class="calculatorButton calculatorBottomButton operatorButton">+</button>
+						<button class="calculatorButton calculatorBottomButton operatorButton">-</button>
 
-                <div class="calculatorTopButtons">
-                    <button class="calculatorButton calculatorTopButton fractionButton topLeft">
-                        <span class="fillSquare"></span>
-                        <span class="fractionBar"></span>
-                        <span class="fillSquare"></span>
-                    </button>
-                    <button class="calculatorButton calculatorTopButton">
-                        √<span class="fillSquare"></span>
-                    </button>
-                    <button class="calculatorButton calculatorTopButton">
-                        𝒙<span class="superIndex superIndexNumber">-1</span>
-                    </button>
-                    <button class="calculatorButton calculatorTopButton">sen</button>
-                    <button class="calculatorButton calculatorTopButton">cos</button>
-                    <button class="calculatorButton calculatorTopButton topRight">tan</button>
-
-                    <button class="calculatorButton calculatorTopButton superIndexButton bottomLeft">
-                        𝒙<span class="superIndex superIndexNumber">2</span>
-                    </button>
-                    <button class="calculatorButton calculatorTopButton">
-                        𝒙<span class="superIndex fillSquare"></span>
-                    </button>
-                    <button class="calculatorButton calculatorTopButton">(</button>
-                    <button class="calculatorButton calculatorTopButton">)</button>
-                    <button class="calculatorButton calculatorTopButton">
-                        log<span class="subIndex fillSquare"></span><span class="nonFillRectangle"></span>
-                    </button>
-                    <button class="calculatorButton calculatorTopButton bottomRight">ln</button>
-                </div>
-
-                <div class="calculatorBottomButtons">
-                    <button class="calculatorButton calculatorBottomButton topLeft">7</button>
-                    <button class="calculatorButton calculatorBottomButton">8</button>
-                    <button class="calculatorButton calculatorBottomButton">9</button>
-                    <button class="calculatorButton calculatorBottomButton deleteButton">DEL</button>
-                    <button class="calculatorButton calculatorBottomButton deleteButton topRight">AC</button>
-        
-                    <button class="calculatorButton calculatorBottomButton">4</button>
-                    <button class="calculatorButton calculatorBottomButton">5</button>
-                    <button class="calculatorButton calculatorBottomButton">6</button>
-                    <button class="calculatorButton calculatorBottomButton operatorButton">×</button>
-                    <button class="calculatorButton calculatorBottomButton operatorButton">÷</button>
-        
-                    <button class="calculatorButton calculatorBottomButton">1</button>
-                    <button class="calculatorButton calculatorBottomButton">2</button>
-                    <button class="calculatorButton calculatorBottomButton">3</button>
-                    <button class="calculatorButton calculatorBottomButton operatorButton">+</button>
-                    <button class="calculatorButton calculatorBottomButton operatorButton">-</button>
-        
-                    <button class="calculatorButton calculatorBottomButton bottomLeft">0</button>
-                    <button class="calculatorButton calculatorBottomButton"><div class="dot"></div></button>
-                    <button class="calculatorButton calculatorBottomButton superIndexButton">
-                        ×10<span class="superIndex superIndexLetter">𝒙</span>
-                    </button>
-                    <button class="calculatorButton calculatorBottomButton letterButton">Ans</button>
-                    <button class="calculatorButton calculatorBottomButton equalButton bottomRight">=</button>
-        
-        
-                </div>
-            </div>
-    
-        </div>
-    </div>
-
-</body>
+						<button class="calculatorButton calculatorBottomButton bottomLeft">0</button>
+						<button class="calculatorButton calculatorBottomButton" id="dot">
+							<div class="dot"></div>
+						</button>
+						<button class="calculatorButton calculatorBottomButton superIndexButton" id="tenRaised">×10<span class="superIndex superIndexLetter">𝒙</span></button>
+						<button class="calculatorButton calculatorBottomButton letterButton" id="ans">Ans</button>
+						<button class="calculatorButton calculatorBottomButton equalButton bottomRight" id="equal">=</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

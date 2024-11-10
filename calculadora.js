@@ -1,4 +1,3 @@
-
 // let withCover = true;
 // let firstTime = true;
 // let mainEnded = false;
@@ -38,127 +37,174 @@
 
 // })
 
-const input = document.getElementById('input');
+const calculatorScreen = document.getElementById('calculatorScreen');
+const calculatorScreenResult = document.getElementById('calculatorScreenResult');
+
+// Inicialización de la biblioteca MathQuill
+var MQ = MathQuill.getInterface(2);
+const mathField = MQ.MathField(calculatorScreen, {
+	spaceBehavesLikeTab: false, // Permite usar el espacio como tabulador dentro de la expresión
+});
+
+const mathFieldResult = MQ.MathField(calculatorScreenResult, {
+	spaceBehavesLikeTab: false, // Permite usar el espacio como tabulador dentro de la expresión
+});
+
 let calculatorOn = false;
 let cursorPos = 0;
+let history = [];
+let lastResult = 0;
 
-document.getElementById('on').addEventListener('click', (e) =>{
+document.addEventListener('click', (e) => {
+	e.preventDefault();
 
-    e.preventDefault();
+	//Si la calculadora está encendida
+	if (calculatorOn) {
+		// Le damos el foco a la pantalla aunque se clicke fuera de ella
+		mathField.focus();
+	}
+});
 
-    if(!calculatorOn){
-        input.focus();
-    }
+// Control del estado de la calculadora (apagada/encendida)
+document.getElementById('on').addEventListener('click', (e) => {
+	e.preventDefault();
 
-    else{
-        input.value = '';
-        cursorPos = 0;
-    }
+	// Si la calculadora está apagada, entonces va a encender
+	if (!calculatorOn) {
+		// Le damos el foco a la pantalla
+		mathField.focus();
+	}
 
-    calculatorOn = !calculatorOn;
-})
+	// Si la calculadora estaba encendida, entonces la apagamos
+	else {
+		// Limpiamos el contenido
+		mathField.latex('');
+		mathFieldResult.latex('');
+		history = [];
+	}
 
-input.addEventListener('keydown', (e) =>{  
+	// Cambiamos el estado al contrario
+	calculatorOn = !calculatorOn;
+});
 
-    e.preventDefault();
+// Escritura de numeros por teclado
+calculatorScreen.addEventListener('keydown', (e) => {
+	e.preventDefault();
 
-    if(calculatorOn){
-
-        let newValue = [...input.value];
-        let dir = 0;
-
-        if(!isNaN(e.key) && e.key !== " "){
-            newValue.splice(cursorPos, 0, e.key);
-            input.value = newValue.join("");
-            dir = 1;
-        }
-    
-        else if(e.key === "Backspace" && input.value.length > 0){
-            if(cursorPos === 0){
-                newValue.splice(cursorPos, 1);
-                dir = 0;
-            }
-
-            else{
-                newValue.splice(cursorPos - 1, 1);
-                dir = -1
-            }
-
-            input.value = newValue.join("");
-        }
-
-        else if(e.key === "ArrowLeft"){
-            dir = -1;
-        }
-
-        else if(e.key === "ArrowRight"){
-            dir = 1;
-        }
-
-        moveCursor(dir);
-    }
-
+	if (calculatorOn) {
+		// Si la tecla pulsada es un numero y no es un espacio
+		if (!isNaN(e.key) && e.key !== ' ') {
+			mathField.write(e.key);
+		}
+		// Si la tecla pulsada es la flecha arriba
+		else if (e.key === 'ArrowUp') {
+			// Movemos el cursor al final
+			mathField.moveToRightEnd();
+		}
+		// Si la tecla pulsada es la flecha abajo
+		else if (e.key === 'ArrowDown') {
+			// Movemos el cursor al principio
+			mathField.moveToLeftEnd();
+		}
+	}
 });
 
 const buttons = [...document.getElementsByClassName('calculatorButton')];
 
+// Parseo de casos especiales
+let replacements = {
+	'\\ln': 'log',
+	Ans: lastResult,
+};
 
-buttons.forEach(button => {
+buttons.forEach((button) => {
+	button.addEventListener('click', (e) => {
+		if (calculatorOn) {
+			e.preventDefault();
 
-    button.addEventListener('click', (e) => {
-
-        if(calculatorOn){
-            e.preventDefault();
-
-            const input = document.getElementById('input');
-            
-            input.value += button.textContent
-
-            input.focus();
-
-        }
-        
-    })
+			// Si pulsamos AC
+			if (button.id === 'clear') {
+				// Limpiamos el contenido
+				mathField.latex('');
+				mathFieldResult.latex('');
+			} else if (button.id === 'delete') {
+				mathField.keystroke('Backspace');
+			} else if (button.id === 'fraction') {
+				mathField.cmd('\\frac');
+			} else if (button.id === 'sqrt') {
+				mathField.cmd('\\sqrt');
+			} else if (button.id === 'inverse') {
+				mathField.write('\\left(\\right)^{-1}');
+			} else if (button.id === 'sin') {
+				mathField.write('\\sin\\left(\\right)');
+			} else if (button.id === 'cos') {
+				mathField.write('\\cos\\left(\\right)');
+			} else if (button.id === 'tan') {
+				mathField.write('\\tan\\left(\\right)');
+			} else if (button.id === 'squared') {
+				mathField.write('\\left(\\right)^{2}');
+			} else if (button.id === 'raised') {
+				mathField.write('{}^{}');
+			} else if (button.id === 'log') {
+				mathField.write('\\log_{}()');
+			} else if (button.id === 'ln') {
+				mathField.write('ln()');
+			} else if (button.id === 'dot') {
+				mathField.write('.');
+			} else if (button.id === 'tenRaised') {
+				mathField.write('×10^{}');
+			} else if (button.id === 'equal') {
+				// Guardamos la expresion en el historial
+				history.push(mathField.latex());
+				// A la expresion se le reemplazan los casos especiales
+				let expresion = mathField.latex().replace(/Ans|\\ln/g, (match) => replacements[match]);
+				// Último caso especial, reemplazamos los logaritmos con base
+				expresion = expresion.replace(/\\log_(\d+)\((\d+)\)/g, 'logn($2, $1)');
+				// Evaluamos la expresion
+				let result = Math.round(evaluatex(expresion, { latex: true })() * 10000) / 10000;
+				// Mostramos el resultado
+				mathFieldResult.latex(result);
+				// Guardamos el resultado
+				lastResult = result;
+			} else {
+				mathField.write(button.textContent);
+			}
+		}
+	});
 });
 
 const arrows = [...document.getElementById('arrowsContainer').childNodes];
 
-arrows.forEach(arrow => {
+arrows.forEach((arrow) => {
+	// Añadimos el evento de click a cada boton de flecha
+	arrow.addEventListener('click', (e) => {
+		e.preventDefault();
 
-    arrow.addEventListener('click', (e) => {
+		// Si la calculadora está encendida
+		if (calculatorOn) {
+			// Si se pulsa la flecha izquierda
+			if (arrow.id === 'leftArrow') {
+				// Indicar que el cursor se debe mover un espacio hacia la izquierda
+				mathField.keystroke('Left');
+			}
 
-        e.preventDefault();   
+			// Si se pulsa la flecha derecha
+			else if (arrow.id === 'rightArrow') {
+				// Indicar que el cursor se debe mover un espacio hacia la derecha
+				mathField.keystroke('Right');
+			}
 
-        if(calculatorOn){    
-            
-            let dir = 0;
-            
-            if(arrow.id === 'leftArrow'){
-                dir = -1;
-            }
+			// Si se pulsa la flecha arriba
+			else if (arrow.id === 'upArrow') {
+				// Indicar que el cursor debe moverse al final
+				mathField.moveToRightEnd();
+			}
 
-            else if(arrow.id === 'rightArrow'){
-                dir = 1;
-            }
-
-            moveCursor(dir);
-            input.focus();
-        }
-    })
-})
-
-
-function moveCursor(direction){
-
-    cursorPos += direction;
-
-    if(cursorPos < 0 ){
-        console.log('hola');
-        cursorPos = input.value.length;
-    }
-    else if(cursorPos > input.value.length){
-        cursorPos = 0;
-    }
-
-    input.setSelectionRange(cursorPos, cursorPos);
-}
+			// Si se pulsa la flecha abajo
+			else if (arrow.id === 'downArrow') {
+				// Indicar que el cursor debe moverse al principio
+				mathField.moveToLeftEnd();
+			}
+		}
+	});
+});
