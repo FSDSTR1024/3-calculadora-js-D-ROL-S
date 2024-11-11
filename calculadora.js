@@ -1,41 +1,40 @@
-// let withCover = true;
-// let firstTime = true;
-// let mainEnded = false;
-// let coverEnded = true;
+let withCover = true;
+let firstTime = true;
+let mainEnded = false;
+let coverEnded = true;
 
-// document.getElementById('main').addEventListener('click', () =>{
-//     const main = document.getElementById('main');
-//     main.style.animationName = 'rotateCalculator';
+// Rotacion inicial
+document.getElementById('main').addEventListener('click', () => {
+	const main = document.getElementById('main');
+	main.style.animationName = 'rotateCalculator';
 
-//     main.addEventListener('animationend', () => {
-//         mainEnded = true;
-//     })
-// });
+	main.addEventListener('animationend', () => {
+		mainEnded = true;
+	});
+});
 
-// document.getElementById('cover').addEventListener('click', () =>{
+// Control del estado de la calculadora con tapa o sin tapa
+document.getElementById('cover').addEventListener('click', () => {
+	if (!mainEnded || !coverEnded) return;
 
-//     if(!mainEnded || !coverEnded) return;
+	coverEnded = false;
 
-//     coverEnded = false;
+	if (withCover) {
+		cover.style.animationName = 'removeCover';
+	} else {
+		cover.style.animationName = 'putCover';
+	}
 
-//     if(withCover){
-//         cover.style.animationName = 'removeCover';
-//     }
-//     else{
-//         cover.style.animationName = 'putCover';
-//     }
+	withCover = !withCover;
 
-//     withCover = !withCover;
+	cover.addEventListener('animationend', () => {
+		if (firstTime) {
+			firstTime = false;
+		}
 
-//     cover.addEventListener('animationend', ()=>{
-//         if(firstTime){
-//             firstTime = false;
-//         }
-
-//         coverEnded = true;
-//     });
-
-// })
+		coverEnded = true;
+	});
+});
 
 const calculatorScreen = document.getElementById('calculatorScreen');
 const calculatorScreenResult = document.getElementById('calculatorScreenResult');
@@ -109,13 +108,9 @@ calculatorScreen.addEventListener('keydown', (e) => {
 	}
 });
 
-const buttons = [...document.getElementsByClassName('calculatorButton')];
+// Control de los botones
 
-// Parseo de casos especiales
-let replacements = {
-	'\\ln': 'log',
-	Ans: lastResult,
-};
+const buttons = [...document.getElementsByClassName('calculatorButton')];
 
 buttons.forEach((button) => {
 	button.addEventListener('click', (e) => {
@@ -154,14 +149,12 @@ buttons.forEach((button) => {
 			} else if (button.id === 'tenRaised') {
 				mathField.write('×10^{}');
 			} else if (button.id === 'equal') {
-				// Guardamos la expresion en el historial
-				history.push(mathField.latex());
 				// A la expresion se le reemplazan los casos especiales
-				let expresion = mathField.latex().replace(/Ans|\\ln/g, (match) => replacements[match]);
-				// Último caso especial, reemplazamos los logaritmos con base
-				expresion = expresion.replace(/\\log_(\d+)\((\d+)\)/g, 'logn($2, $1)');
+				let expression = specialCaseParsing();
+				// Guardamos la expresion en el historial
+				if (expression.length > 0) AddAccountToHistory();
 				// Evaluamos la expresion
-				let result = Math.round(evaluatex(expresion, { latex: true })() * 10000) / 10000;
+				let result = Math.round(evaluatex(expression, { latex: true })() * 10000) / 10000;
 				// Mostramos el resultado
 				mathFieldResult.latex(result);
 				// Guardamos el resultado
@@ -172,6 +165,15 @@ buttons.forEach((button) => {
 		}
 	});
 });
+
+function specialCaseParsing() {
+	let expression = mathField.latex().replace(/Ans/g, lastResult);
+	expression = expression.replace(/\\ln/g, 'log');
+	expression = expression.replace(/\\log_(\d+)\((\d+)\)/g, 'logn($2, $1)');
+	return expression;
+}
+
+// Control de las flechas
 
 const arrows = [...document.getElementById('arrowsContainer').childNodes];
 
@@ -208,3 +210,28 @@ arrows.forEach((arrow) => {
 		}
 	});
 });
+
+// Control del historial
+
+const historyList = document.getElementById('historyList');
+
+function AddAccountToHistory() {
+	// Guardamos la expresion en el historial
+	history.push(mathField.latex());
+
+	const li = document.createElement('li');
+	const mathFieldLi = MQ.MathField(li, {
+		spaceBehavesLikeTab: false, // Permite usar el espacio como tabulador dentro de la expresión
+	});
+
+	li.addEventListener('click', (e) => {
+		e.preventDefault();
+
+		if (calculatorOn) {
+			mathField.latex(mathFieldLi.latex());
+		}
+	});
+
+	mathFieldLi.latex(mathField.latex());
+	historyList.appendChild(li);
+}

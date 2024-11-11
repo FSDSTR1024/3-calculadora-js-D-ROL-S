@@ -1,6 +1,6 @@
 @font-face {
-	font-family: "Exo";
-	src: url("Exo/static/Exo-Bold.ttf") format("truetype");
+	font-family: 'Exo';
+	src: url('Exo/static/Exo-Bold.ttf') format('truetype');
 	font-weight: bold;
 }
 
@@ -10,7 +10,7 @@
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font-family: "Exo";
+	font-family: 'Exo';
 	vertical-align: baseline;
 }
 
@@ -31,7 +31,7 @@ spline-viewer {
 div#main {
 	animation-duration: 2s;
 	position: relative;
-	margin: 100px 705px 100px 720px;
+	margin: 100px 705px 50px 720px;
 }
 
 @keyframes rotateCalculator {
@@ -412,4 +412,44 @@ button.bottomRight {
 
 button.equalButton {
 	font-size: 20px;
+}
+
+/* ======== Historial de calculos ======== */
+#history {
+	position: absolute;
+	left: 1325px;
+	bottom: 20px;
+	width: 500px;
+	height: 350px;
+	border-radius: 15px;
+	background-color: RGB(77, 77, 77);
+	overflow-y: scroll;
+}
+
+#history::-webkit-scrollbar {
+	display: none;
+}
+
+#historyList {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 10px;
+	margin: 5px;
+}
+
+#historyList > li {
+	padding: 8px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color: RGB(201, 223, 210);
+	border-radius: 15px;
+	width: 100%;
+	pointer-events: all;
+}
+
+#historyList > li:hover {
+	cursor: pointer;
+	background-color: RGB(56, 76, 174);
 }
