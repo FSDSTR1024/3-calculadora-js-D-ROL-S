@@ -21,8 +21,15 @@ document.getElementById('cover').addEventListener('click', () => {
 
 	if (withCover) {
 		cover.style.animationName = 'removeCover';
+		if (calculatorOn) {
+			mathField.focus();
+		}
 	} else {
 		cover.style.animationName = 'putCover';
+
+		if (calculatorOn) {
+			mathField.blur();
+		}
 	}
 
 	withCover = !withCover;
@@ -58,7 +65,7 @@ document.addEventListener('click', (e) => {
 	e.preventDefault();
 
 	//Si la calculadora está encendida
-	if (calculatorOn) {
+	if (calculatorOn && !withCover) {
 		// Le damos el foco a la pantalla aunque se clicke fuera de ella
 		mathField.focus();
 	}
@@ -90,7 +97,7 @@ document.getElementById('on').addEventListener('click', (e) => {
 calculatorScreen.addEventListener('keydown', (e) => {
 	e.preventDefault();
 
-	if (calculatorOn) {
+	if (calculatorOn && !withCover) {
 		// Si la tecla pulsada es un numero y no es un espacio
 		if (!isNaN(e.key) && e.key !== ' ') {
 			mathField.write(e.key);
@@ -227,7 +234,7 @@ function AddAccountToHistory() {
 	li.addEventListener('click', (e) => {
 		e.preventDefault();
 
-		if (calculatorOn) {
+		if (calculatorOn && !withCover) {
 			mathField.latex(mathFieldLi.latex());
 		}
 	});
